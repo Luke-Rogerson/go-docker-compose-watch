@@ -2,10 +2,9 @@ FROM golang:1.21.3
 
 WORKDIR /app
 
-COPY . .
+RUN go install github.com/cosmtrek/air@latest
 
+COPY go.mod ./
 RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o main .
-
-CMD ["/app/main"]
+CMD ["air", "-c", ".air.toml"]
